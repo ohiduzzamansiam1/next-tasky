@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@bradgarropy/next-google-analytics':
+    specifier: ^1.0.2
+    version: 1.0.2(next@14.0.4)(react@18.2.0)
   '@clerk/nextjs':
     specifier: ^4.29.1
     version: 4.29.1(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -79,6 +82,17 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
+
+  /@bradgarropy/next-google-analytics@1.0.2(next@14.0.4)(react@18.2.0):
+    resolution: {integrity: sha512-Xhli9NkdJbmvs1QNAcC9At3w/GIlXunVIMQzcAYfVP8tQSX3Q4un0doZfQknNvRz+QO6we+8lDE4/dMOio0vzQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      next: '>=12'
+      react: '>=16'
+    dependencies:
+      next: 14.0.4(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: false
 
   /@clerk/backend@0.37.0(react@18.2.0):
     resolution: {integrity: sha512-ngBokqd5WaupUi5+xUaZNGCdrVMJFo+Sjiin7gxoXPVq/qdgA3phiEooEZmVAc9Io0MfAqheuiQ1XcCZj4kvdg==}

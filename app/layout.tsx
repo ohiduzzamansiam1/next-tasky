@@ -1,5 +1,6 @@
 import AppBar from "@/components/AppBar";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
+import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -23,7 +24,10 @@ export default function RootLayout({
         <html lang="en">
           <body className={inter.className}>
             <AppBar />
-            <div className="container">{children}</div>
+            <div className="container">
+              <GoogleAnalytics measurementId="G-M1PFRFW5Q7" />
+              {children}
+            </div>
           </body>
         </html>
       </ClerkProvider>
