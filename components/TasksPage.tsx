@@ -32,19 +32,17 @@ function TasksPage() {
 
   const { isLoaded, user } = useUser();
 
-  const [userFullName, setUserFullName] = useState<string | null>(() => {
-    return localStorage.getItem("userFullName") || null;
+  const [userFirstName, setUserFirstName] = useState<string | null>(() => {
+    return localStorage.getItem("userFirstName") || null;
   });
 
   useEffect(() => {
     if (isLoaded && user) {
-      const storedFullName = localStorage.getItem("userFullName");
+      const storedFirstName = localStorage.getItem("userFirstName");
 
-      const fullName = `${user.firstName} ${user.lastName}`;
-
-      if (fullName !== storedFullName) {
-        localStorage.setItem("userFullName", fullName);
-        setUserFullName(fullName);
+      if (user.firstName !== storedFirstName) {
+        localStorage.setItem("userFirstName", user.firstName as string);
+        setUserFirstName(user.firstName);
       }
     }
   }, [isLoaded, user]);
@@ -54,7 +52,7 @@ function TasksPage() {
       className={`h-dvh flex flex-col py-5 pt-16 md:pt-20 lg:pt-24 max-w-2xl mx-auto`}
     >
       <h1 className="text-center mb-6 text-xl font-semibold">
-        Hi {userFullName}🙋‍♂️
+        Hi {userFirstName}🙋‍♂️
       </h1>
       <div
         className={`lg:order-last flex-1 max-h-full overflow-auto no-scrollbar ${
