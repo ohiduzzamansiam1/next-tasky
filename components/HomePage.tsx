@@ -14,7 +14,7 @@ function HomePage() {
           href="/auth"
           className="btn bg-primary px-7 py-3 font-medium select-none btn-rounded"
         >
-          Short now!
+          Start now!
         </Link>
       </div>
     </main>
