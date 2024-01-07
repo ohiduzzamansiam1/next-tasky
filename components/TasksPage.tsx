@@ -51,7 +51,7 @@ function TasksPage() {
     <div
       className={`h-dvh flex flex-col py-5 pt-16 md:pt-20 lg:pt-24 max-w-2xl mx-auto`}
     >
-      <h1 className="text-center mb-6 text-xl font-semibold">
+      <h1 className="text-center my-5 mt-7 md:mt-3 lg:mt-0 lg:mb-6 text-xl font-semibold">
         Hi {userFirstName}🙋‍♂️
       </h1>
       <div
@@ -82,7 +82,7 @@ function TasksPage() {
         )}
       </div>
 
-      <div className="card p-7 w-full lg:mb-4">
+      <div className="card p-4 lg:p-6 w-full lg:mb-4">
         <TaskSubmitForm />
       </div>
     </div>
