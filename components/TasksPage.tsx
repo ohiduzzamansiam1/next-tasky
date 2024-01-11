@@ -61,17 +61,19 @@ function TasksPage() {
       </h1>
       <div
         className={`lg:order-last flex-1 max-h-full overflow-auto no-scrollbar ${
-          error ? "justify-center items-center flex" : ""
+          !isLoading && !tasks?.length ? "justify-center items-center flex" : ""
         } `}
       >
         {isLoading ? (
           // <Loading />
           <>
-            {Array.from({ length: parseInt(taskLength as string) }).map(
-              (_, idx) => {
-                return <Loading key={idx} />;
-              }
-            )}
+            {Array.from({
+              length: !parseInt(taskLength as string)
+                ? 1
+                : parseInt(taskLength as string),
+            }).map((_, idx) => {
+              return <Loading key={idx} />;
+            })}
           </>
         ) : (
           <>
