@@ -1,51 +1,70 @@
 "use client";
 
+// Importing necessary dependencies and types
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 import { TaskType } from "./TasksPage";
 
+// Interface for the props of EachTask component
 interface EachTaskProps {
   title: string;
   id: string;
 }
 
+// Component for rendering each individual task
 function EachTask({ title, id }: EachTaskProps) {
+  // Query client for managing queries
   const queryClient = useQueryClient();
 
+  // Mutation for handling task deletion
   const deleteTaskMutation = useMutation(
+    // Async function for deleting a task
     async () => {
       await axios.post(`/api/delete-task`, { id });
     },
     {
+      // onMutate is called before the mutation is executed
       onMutate: async () => {
+        // Canceling any ongoing "tasks" queries
         await queryClient.cancelQueries("tasks");
 
+        // Getting the previous tasks from the cache
         const previousTasks =
           queryClient.getQueryData<TaskType[]>("tasks") || [];
 
+        // Updating the cache by removing the deleted task
         queryClient.setQueryData("tasks", (old: any) =>
           old.filter((task: TaskType) => task.id !== id)
         );
 
+        // Returning the previous tasks for potential rollback on error
         return { previousTasks };
       },
+      // onError is called if the mutation encounters an error
       onError: (_, __, context) => {
+        // Rolling back to the previous tasks in case of an error
         queryClient.setQueryData("tasks", context?.previousTasks);
       },
+      // onSettled is called after the mutation is either resolved or rejected
       onSettled: () => {
+        // Invalidating the "tasks" query to refetch the updated data
         queryClient.invalidateQueries("tasks");
       },
     }
   );
 
+  // Function to handle task deletion
   const handleDelete = async () => {
+    // Initiating the mutation to delete the task
     deleteTaskMutation.mutate();
   };
 
+  // Rendering each task as a card with title and delete button
   return (
     <div className="card p-7 w-full my-2 flex items-center justify-between">
       <span>{title}</span>
       <button className="text-red-500" onClick={handleDelete}>
+        {/* Icon for the delete button */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -65,4 +84,5 @@ function EachTask({ title, id }: EachTaskProps) {
   );
 }
 
+// Exporting the EachTask component
 export default EachTask;
