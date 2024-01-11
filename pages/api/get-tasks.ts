@@ -2,6 +2,10 @@ import { getAuth } from "@clerk/nextjs/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../libs/prisma";
 
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 /**
  * Default API route handler for getting tasks.
  *
@@ -32,6 +36,9 @@ export default async function handler(
         createdAt: "desc",
       },
     });
+
+    // Delay to simulate API call
+    await delay(200);
 
     res.status(200).json({ tasks });
   } catch (error: any) {

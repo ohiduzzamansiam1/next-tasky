@@ -1,8 +1,3 @@
-/**
- * NotePage component fetches task data from API and displays it.
- * Uses React Query to fetch tasks from API and handle loading/error states.
- * Renders tasks list if available, or loading/error message.
- */
 "use client";
 
 import { useUser } from "@clerk/nextjs";
@@ -36,16 +31,26 @@ function TasksPage() {
     return localStorage.getItem("userFirstName") || null;
   });
 
+  const [taskLength, setTaskLength] = useState<string | null>(() => {
+    return localStorage.getItem("taskLength") || null;
+  });
+
   useEffect(() => {
     if (isLoaded && user) {
       const storedFirstName = localStorage.getItem("userFirstName");
+      const storedTaskLength = localStorage.getItem("taskLength");
+
+      if (tasks?.length !== parseInt(storedTaskLength as string)) {
+        localStorage.setItem("taskLength", tasks!?.length.toString());
+        setTaskLength(taskLength);
+      }
 
       if (user.firstName !== storedFirstName) {
         localStorage.setItem("userFirstName", user.firstName as string);
         setUserFirstName(user.firstName);
       }
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user, tasks, taskLength]);
 
   return (
     <div
@@ -56,11 +61,18 @@ function TasksPage() {
       </h1>
       <div
         className={`lg:order-last flex-1 max-h-full overflow-auto no-scrollbar ${
-          !error && !tasks!?.length ? "justify-center items-center flex" : ""
+          error ? "justify-center items-center flex" : ""
         } `}
       >
         {isLoading ? (
-          <Loading />
+          // <Loading />
+          <>
+            {Array.from({ length: parseInt(taskLength as string) }).map(
+              (_, idx) => {
+                return <Loading key={idx} />;
+              }
+            )}
+          </>
         ) : (
           <>
             {error ? (
@@ -99,7 +111,14 @@ function Error() {
   );
 }
 function Loading() {
-  return <p className="font-medium text-center text-xl">Loading tasks</p>;
+  return (
+    <div className="card p-7 w-full my-2 flex items-center justify-between">
+      <div className="flex-1 space-y-2">
+        <div className="w-1/2 h-4 bg-gray-200/20 rounded"></div>
+      </div>
+      <div className="p-4 rounded-full bg-gray-200/20 animate-pulse"></div>
+    </div>
+  );
 }
 function NoTasks() {
   return (

@@ -3,10 +3,10 @@ import ReactQueryProvider from "@/components/ReactQueryProvider";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Cabin } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const cabin = Cabin({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Tasky - Next",
@@ -22,7 +22,7 @@ export default function RootLayout({
     <ReactQueryProvider>
       <ClerkProvider>
         <html lang="en">
-          <body className={inter.className}>
+          <body className={cabin.className}>
             <AppBar />
             <div className="container">
               <GoogleAnalytics measurementId="G-M1PFRFW5Q7" />
